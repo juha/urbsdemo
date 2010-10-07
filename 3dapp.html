@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" media="all" href="./public/css/main.css" />
+    <meta name="viewport" content="width=device-width" />
+	<title>Urbsville</title>	
+</head>
+
+<body>
+<div id="header">
+    <a href="./" id="logo"><em>Urb</em>a<span>node</span></a>
+</div>
+<div id="content">
+    <h1>Your turn now</h1>
+    
+    <div id="canvas" style="overflow: hidden; width: 300px; height: 300px"></div>
+    
+    <input type="text" class="colored" id="color-picker" />
+    
+    <h3>Pan <span id="pan-value"></span></h3>
+    <div class="slider" id="pan-slider">
+        <a href="#" class="ui-slider-handle" id="handle-1"></a>
+    </div>
+    
+    <h3>Tilt <span id="tilt-value"></span></h3>
+    <div class="slider" id="tilt-slider">
+        <a href="#" class="ui-slider-handle handle-2"></a>
+    </div>
+</div>
+
+<script type="text/javascript" src="./public/js/jquery.js"></script>
+<script type="text/javascript" src="./public/js/js3d.js"></script>
+<script type="text/javascript" src="./public/jscolor/jscolor.js"></script>
+<script type="text/javascript">
+    var vR = 0.03;
+    var canvas;
+    
+    function startDrag(e, callback) {
+        var el = e.target;
+        var width = el.offsetWidth;
+        var min = 0;
+        var max = 255;
+        
+        if (e.type === "touchstart") {
+            el.onmousedown = null;
+            el.ontouchmove = moveDrag;
+            el.className = "ui-slider-handle active";
+            el.ontouchend = function () {
+                el.className = "ui-slider-handle";
+                el.ontouchmove = null;
+                el.ontouchend = null;
+                el.ontouchstart = startDrag;
+            }
+        } else {
+            el.className = "ui-slider-handle active";
+            document.onmousemove = moveDrag;
+            document.onmouseup = function () {
+                el.className = "ui-slider-handle";
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+        
+        var pos = [el.offsetLeft, el.offsetTop];
+        var origin = getCoors(e);
+        
+        function moveDrag (e) {
+            var currentPos = getCoors(e);
+            var deltaX = currentPos[0] - origin[0];
+            var deltaY = currentPos[1] - origin[1];
+            var x = (pos[0] + deltaX);
+            if (x >= min && x <= max) {
+                el.style.left = (pos[0] + deltaX) + 'px';
+                callback((pos[0] + deltaX));
+                //setColor((pos[0] + deltaX));
+            }
+            return false;
+        }
+
+        function getCoors(e) {
+            var coors = [];
+            if (e.touches && e.touches.length) {
+                coors[0] = e.touches[0].clientX;
+                coors[1] = e.touches[0].clientY;
+            } else {
+                coors[0] = e.clientX;
+                coors[1] = e.clientY;
+            }
+            return coors;
+        }
+        e.preventDefault();
+    }
+    
+    function panCallback (value) {
+        $("#pan-value").html(value);
+    }
+
+    function tiltCallback (value) {
+        $("#tilt-value").html(value);        
+    }
+    
+	function loop() {
+		canvas.matrix = canvas.rotateY(vR);
+		canvas.paint();
+		setTimeout("loop();", 50);//30);
+	}
+	
+	function drawHelix(m) {
+		m = scale(100,20,100,m);
+		var tightness = 3;
+		for (var t = 0; t < 21; t++) {
+			var p = canvas.addPoint(Math.cos(t/tightness),
+			                        t,
+			                        Math.sin(t/tightness),"#",m);
+			p.div.style.color="rgb("+Math.floor(200*(23-t)/23)+",0,0)";
+		}
+	}
+	
+    $(window).load(function () {
+        var el = $("#color-picker");
+        var picker = new jscolor.color(el.get(0));
+        el.get(0).color.showPicker();
+        
+        jscolor.picker.boxB.style.background = "#333";
+        jscolor.picker.boxB.style.borderColor = "#333";
+        jscolor.picker.boxB.style.width = "260px";
+        
+		canvas = new JS3D("canvas", -20);
+		canvas.matrix = identity();
+		canvas.matrix = canvas.translate(canvas.width/2,0,-200);
+		drawHelix(identity());
+		drawHelix(rotateY(3.14,identity()));
+		loop();
+        
+        var pan = $("#pan-slider .ui-slider-handle").get(0);
+        pan.onmousedown = pan.ontouchstart = function (e) {startDrag(e, panCallback);}
+        
+        var tilt = $("#tilt-slider .ui-slider-handle").get(0);
+        tilt.onmousedown = tilt.ontouchstart = function (e) {startDrag(e, tiltCallback);}
+    });
+    window.top.scrollTo(0, 1);
+</script>
+</body>
+</html>
