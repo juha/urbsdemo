@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" media="all" href="./public/css/main.css" />
+    <meta name="viewport" content="width=device-width" />
+	<title>Urbsville</title>	
+</head>
+
+<body>
+<div id="header">
+    <a href="./" id="logo"><em>Urb</em>a<span>node</span></a>
+</div>
+<div id="content">
+    <h1>Your turn now</h1>
+    
+    <input type="text" class="colored" id="color-picker" />
+    
+    <h3>Pan</h3>
+    <div class="slider">
+        <a href="#" class="ui-slider-handle" id="handle-1"></a>
+    </div>
+    
+    <h3>Tilt</h3>
+    <div class="slider">
+        <a href="#" class="ui-slider-handle handle-2"></a>
+    </div>
+</div>
+
+<script type="text/javascript" src="./public/js/jquery.js"></script>
+<script type="text/javascript" src="./public/jscolor/jscolor.js"></script>
+<script type="text/javascript">
+    function startDrag(e) {
+        var el = e.target;
+        var width = el.offsetWidth;
+        var min = 0;
+        var max = 255;
+        
+        if (e.type === "touchstart") {
+            el.onmousedown = null;
+            el.ontouchmove = moveDrag;
+            el.ontouchend = function () {
+                el.ontouchmove = null;
+                el.ontouchend = null;
+                el.ontouchstart = startDrag;
+            }
+        } else {
+            document.onmousemove = moveDrag;
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+        
+        var pos = [el.offsetLeft, el.offsetTop];
+        var origin = getCoors(e);
+        
+        function moveDrag (e) {
+            var currentPos = getCoors(e);
+            var deltaX = currentPos[0] - origin[0];
+            var deltaY = currentPos[1] - origin[1];
+            var x = (pos[0] + deltaX);
+            if (x >= min && x <= max) {
+                el.style.left = (pos[0] + deltaX) + 'px';
+                //setColor((pos[0] + deltaX));
+            }
+            return false;
+        }
+
+        function getCoors(e) {
+            var coors = [];
+            if (e.touches && e.touches.length) {
+                coors[0] = e.touches[0].clientX;
+                coors[1] = e.touches[0].clientY;
+            } else {
+                coors[0] = e.clientX;
+                coors[1] = e.clientY;
+            }
+            return coors;
+        }
+        e.preventDefault();
+    }
+    $(window).load(function () {
+        var el = $("#color-picker");
+        var picker = new jscolor.color(el.get(0));
+        el.get(0).color.showPicker();
+        
+        $(".slider .ui-slider-handle").each(function () {
+            this.onmousedown = this.ontouchstart = startDrag;            
+        });
+    });
+</script>
+</body>
+</html>
