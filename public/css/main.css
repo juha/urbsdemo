@@ -1,0 +1,188 @@
+html{
+    font: 12px Arial, Helvetica, sans-serif;
+    background: #050505;
+    color: #fff;
+    margin: 0;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td {margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input,textarea,select{*font-size:100%;}
+legend{color:#000;}
+
+#header {
+    text-align: right;
+    padding: 0.5em 1em;
+}
+
+a#logo {
+    font: bold 2em 'Molengo', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color: #1b4f82;
+}
+
+a#logo em {color: #326fac;}
+a#logo span {color: #023c75;}
+
+#content {
+    border-bottom: solid 1px #1c1c1c;
+    border-top: solid 1px #1c1c1c;
+    background: #171717;
+    min-height: 300px;
+    padding: 1em;
+}
+
+h1 {
+    font: bold 2.5em 'Molengo', Arial, Helvetica, sans-serif;
+    margin: 0 0 0.5em 0;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+p {
+    margin: 0 0 1.5em 0;
+    line-height: 1.5em;
+}
+
+a, a:visited {
+    color: #fff;
+}
+
+form label {
+    display: block;
+    line-height: 2em;
+}
+
+div.buttons {
+    margin: 1em 0;
+}
+
+input[type=text] {
+    line-height: 1.5em;
+    font-size: 1.2em;
+    padding: 0.1em;
+    width: 250px;
+}
+
+#color-picker {
+    visibility: hidden;
+    display: block;
+    margin: -2em 0 10em 0;
+}
+
+div.buttons button, div.buttons a.btn {
+    border: solid 1px #588abc;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: #00366b;
+    background-image: -webkit-gradient(linear, left top, left bottom,
+        from(#3471ad),
+        color-stop(0.5, #00366b),
+        color-stop(0.5, #00366b),
+        to(#00366b));
+    font-size: 1.2em;
+    padding: 0.3em 0.8em;
+    color: #fff;
+}
+
+#control, #outro {
+    display: none;
+}
+
+.grid-9 {
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.grid-9 li {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    margin: 0 6px 6px 0;
+    border: solid 2px green;
+    height: 90px;
+    width: 90px;
+    float: left;
+}
+
+.grid-9 li.on {
+    background: green;
+}
+
+.pointer {
+    border: solid 2px green;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    height: 288px;
+    width: 288px;
+}
+
+.pointer div {
+    position: absolute;
+    border: dotted 1px red;
+    height: 288px;
+    width: 288px;
+    left: -290px;
+    top: -290px;
+}
+
+.slider {
+    border: solid 1px black;
+    margin-bottom: 18px;
+    position: relative;
+    background: #333;
+    margin: 1.5em;
+    height: 9px;
+    width: 255px;
+}
+
+.slider .ui-slider-range {
+    background: green;
+    position: absolute;
+    opacity: 0.3;
+    display: block;
+    height: 100%;
+    width: 10px;
+}
+
+.slider .ui-slider-handle {
+    border: solid 1px green;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    position: absolute;
+    background: green;
+    display: block;
+    margin-left: -9px; /* width/2 */
+    height: 18px;
+    width: 18px;
+    top: -6px;
+}
+
+.bigdevice {
+  height: 500px;
+  border: 2px solid black;
+}
+
+.device {
+  display: inline-block;
+  height: 50px;
+  width: 300px;
+  text-align: center;
+}
