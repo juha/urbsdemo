@@ -24,7 +24,7 @@ legend{color:#000;}
 }
 
 a#logo {
-    font: bold 2em 'Molengo', Arial, Helvetica, sans-serif;
+    font: bold 2.5em 'Molengo', Arial, Helvetica, sans-serif;
     text-decoration: none;
     color: #1b4f82;
 }
@@ -36,7 +36,7 @@ a#logo span {color: #023c75;}
     border-bottom: solid 1px #1c1c1c;
     border-top: solid 1px #1c1c1c;
     background: #171717;
-    min-height: 300px;
+    min-height: 380px;
     padding: 1em;
 }
 
@@ -49,6 +49,8 @@ h2 {
     font-weight: bold;
     font-size: 1.7em;
 }
+
+h3 span {color: #666;}
 
 h3 {
     font-weight: bold;
@@ -83,7 +85,7 @@ input[type=text] {
 #color-picker {
     visibility: hidden;
     display: block;
-    margin: -2em 0 10em 0;
+    margin: 1em 0 10em 0;
 }
 
 div.buttons button, div.buttons a.btn {
@@ -106,45 +108,15 @@ div.buttons button, div.buttons a.btn {
     display: none;
 }
 
-.grid-9 {
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.grid-9 li {
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    margin: 0 6px 6px 0;
-    border: solid 2px green;
-    height: 90px;
-    width: 90px;
-    float: left;
-}
-
-.grid-9 li.on {
-    background: green;
-}
-
-.pointer {
-    border: solid 2px green;
-    margin-bottom: 18px;
+#canvas {
     position: relative;
-    overflow: hidden;
-    height: 288px;
-    width: 288px;
-}
-
-.pointer div {
-    position: absolute;
-    border: dotted 1px red;
-    height: 288px;
-    width: 288px;
-    left: -290px;
-    top: -290px;
+    background: #333;
+    height: 300px;
+    width: 300px;
 }
 
 .slider {
-    border: solid 1px black;
+    border: solid 1px #1c1c1c;
     margin-bottom: 18px;
     position: relative;
     background: #333;
@@ -163,16 +135,21 @@ div.buttons button, div.buttons a.btn {
 }
 
 .slider .ui-slider-handle {
-    border: solid 1px green;
+    border: solid 1px #123960;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     position: absolute;
-    background: green;
+    background: #00366b;
     display: block;
+    
     margin-left: -9px; /* width/2 */
     height: 18px;
     width: 18px;
     top: -6px;
+}
+
+.slider .ui-slider-handle.active {
+    border-color: #588abc;
 }
 
 .bigdevice {
