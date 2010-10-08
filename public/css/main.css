@@ -85,7 +85,7 @@ input[type=text] {
 #color-picker {
     visibility: hidden;
     display: block;
-    margin: 1em 0 10em 0;
+    margin: -1em 0 10em 1em;
 }
 
 div.buttons button, div.buttons a.btn {
