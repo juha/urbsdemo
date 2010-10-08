@@ -125,15 +125,6 @@ div.buttons button, div.buttons a.btn {
     width: 255px;
 }
 
-.slider .ui-slider-range {
-    background: green;
-    position: absolute;
-    opacity: 0.3;
-    display: block;
-    height: 100%;
-    width: 10px;
-}
-
 .slider .ui-slider-handle {
     border: solid 1px #123960;
     -moz-border-radius: 3px;
@@ -142,10 +133,10 @@ div.buttons button, div.buttons a.btn {
     background: #00366b;
     display: block;
     
-    margin-left: -9px; /* width/2 */
-    height: 18px;
-    width: 18px;
-    top: -6px;
+    margin-left: -11px; /* width/2 */
+    height: 22px;
+    width: 22px;
+    top: -7px;
 }
 
 .slider .ui-slider-handle.active {

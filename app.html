@@ -15,8 +15,6 @@
     <a href="./" id="logo"><em>Urb</em>a<span>node</span></a>
 </div>
 <div id="content">
-    <h1>Your turn now</h1>
-
     <h3>Color <span id="color-value"></span></h3>
     <input type="text" class="colored" id="color-picker" />
     
@@ -49,10 +47,10 @@
 
         var startDrag = function (e) {
             if (e.type === "touchstart") {
+                el.addClass("active");
                 var _el = el.get(0);
                 _el.onmousedown = null;
                 _el.ontouchmove = moveDrag;
-                el.addClass("active");
                 _el.ontouchend = function () {
                     el.removeClass("active");
                     _el.ontouchmove = null;
@@ -69,6 +67,7 @@
                 }
             }
             e.preventDefault();
+            return false;
         };
 
         var moveDrag = function (e) {
@@ -78,6 +77,7 @@
                 el.css({left: val + "px"});
                 if (callback) callback(round(val/max));
             }
+            e.preventDefault();
             return false;
         };
         cont.click(function (e) {
@@ -89,6 +89,21 @@
             }
         });
         el.get(0).onmousedown = el.get(0).ontouchstart = startDrag;
+    };
+    
+    $.fn.updateColor = function (color, callback) {
+        var update = false;
+        var el = this.get(0);
+        
+        this.click(function () {
+            colorCallback(color.toString().toUpperCase());
+        });
+        
+        el.onmousedown = el.ontouchstart = function () { update = true; };    
+        el.onmouseup = el.ontouchend = function () { update = false; };    
+        el.onmousemove = el.ontouchmove = function () {
+            colorCallback(color.toString().toUpperCase());
+        };
     };
     
     function panCallback(value) {
@@ -109,9 +124,7 @@
         var picker = new jscolor.color(el);
         el.color.showPicker();
         
-        $("body>div:last").click(function () {
-            colorCallback(el.color.toString().toUpperCase());
-        });
+        $("body>div:last").updateColor(el.color);
         
         jscolor.picker.boxB.style.background = "#333";
         jscolor.picker.boxB.style.borderColor = "#333";

@@ -173,7 +173,12 @@ var jscolor = {
 
 	getMousePos : function(e) {
 		if(!e) { e = window.event; }
-		if(typeof e.pageX === 'number') {
+		if (e.touches && e.touches.length) {
+		    return [
+		        e.touches[0].clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
+		        e.touches[0].clientY + document.body.scrollTop + document.documentElement.scrollTop
+		    ];
+		} else if(typeof e.pageX === 'number') {
 			return [e.pageX, e.pageY];
 		} else if(typeof e.clientX === 'number') {
 			return [
@@ -581,16 +586,16 @@ var jscolor = {
 				y+THIS.pickerBorder+THIS.pickerFace+THIS.pickerInset ];
 
 			// controls interaction
-			p.box.onmouseup =
+			p.box.onmouseup = 
 			p.box.onmouseout = function() { target.focus(); };
-			p.box.onmousedown = function() { abortBlur=true; };
-			p.box.onmousemove = function(e) { holdPad && setPad(e); holdSld && setSld(e); };
-			p.padM.onmouseup =
+			p.box.onmousedown = p.box.ontouchstart = function() { abortBlur=true; };
+			p.box.onmousemove = p.box.ontouchmove = function(e) { holdPad && setPad(e); holdSld && setSld(e); e.preventDefault(); return false;};
+			p.padM.onmouseup = p.padM.ontouchend =
 			p.padM.onmouseout = function() { if(holdPad) { holdPad=false; jscolor.fireEvent(valueElement,'change'); } };
-			p.padM.onmousedown = function(e) { holdPad=true; setPad(e); };
-			p.sldM.onmouseup =
+			p.padM.onmousedown = p.padM.ontouchstart = function(e) { holdPad=true; setPad(e); };
+			p.sldM.onmouseup = p.sldM.ontouchend =
 			p.sldM.onmouseout = function() { if(holdSld) { holdSld=false; jscolor.fireEvent(valueElement,'change'); } };
-			p.sldM.onmousedown = function(e) { holdSld=true; setSld(e); };
+			p.sldM.onmousedown = p.sldM.ontouchstart = function(e) { holdSld=true; setSld(e); };
 
 			// picker
 			p.box.style.width = 4*THIS.pickerInset + 2*THIS.pickerFace + jscolor.images.pad[0] + 2*jscolor.images.arrow[0] + jscolor.images.sld[0] + 'px';
