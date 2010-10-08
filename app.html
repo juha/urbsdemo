@@ -53,7 +53,7 @@
                 _el.onmousedown = null;
                 _el.ontouchmove = moveDrag;
                 _el.addClass("active");
-                el.ontouchend = function () {
+                _el.ontouchend = function () {
                     _el.removeClass("active");
                     _el.ontouchmove = null;
                     _el.ontouchend = null;
