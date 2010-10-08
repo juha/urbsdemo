@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="http://fonts.googleapis.com/css?family=Molengo&amp;subset=latin" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" media="all" href="./public/css/main.css" />
+    <meta name="viewport" content="width=device-width" />
+	<title>Urbsville</title>	
+</head>
+
+<body>
+<div id="header">
+    <a href="./" id="logo"><em>Urb</em>a<span>node</span></a>
+</div>
+<div id="content">
+    <h1>Active users</h1>
+    <ul class="list">
+        <li style="background: black;">
+            <h3>Juha.fi</h3>
+            <p>Color: <strong>black</strong> | Pan: <strong>0.2</strong> | Tilt: <strong>0.2</strong></p>
+            <a href="#" class="delete">Release</a>
+        </li>
+        <li style="background: green;">
+            <h3>termie</h3>
+            <p>Color: <strong>green</strong> | Pan: <strong>0.2</strong> | Tilt: <strong>0.2</strong></p>
+            <a href="#" class="delete">Release</a>
+        </li>
+        <li style="background: yellow;">
+            <h3>Juha</h3>
+            <p>Color: <strong>yellow</strong> | Pan: <strong>0.2</strong> | Tilt: <strong>0.2</strong></p>
+            <a href="#" class="delete">Release</a>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript" src="./public/js/jquery.js"></script>
+<script type="text/javascript" src="./public/jscolor/jscolor.js"></script>
+<script type="text/javascript">
+    $.fn.slider = function (callback) {
+        var cont = this;
+        var max = cont.width();
+        var min = 0.0;
+
+        var el = cont.find("a");
+        var pos = [el.offset().left, el.offset().top];
+        var origin = [el.offset().left, el.offset().top];
+
+        var round = function (x) {
+            return Math.round(x*Math.pow(10, 2))/Math.pow(10, 2);
+        }
+
+        var startDrag = function (e) {
+            if (e.type === "touchstart") {
+                el.addClass("active");
+                var _el = el.get(0);
+                _el.onmousedown = null;
+                _el.ontouchmove = moveDrag;
+                _el.ontouchend = function () {
+                    el.removeClass("active");
+                    _el.ontouchmove = null;
+                    _el.ontouchend = null;
+                    _el.ontouchstart = startDrag;
+                }
+            } else {
+                el.addClass("active");
+                document.onmousemove = moveDrag;
+                document.onmouseup = function () {
+                    el.removeClass("active");
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+            e.preventDefault();
+            return false;
+        };
+
+        var moveDrag = function (e) {
+            var x = (e.touches && e.touches.length) ? e.touches[0].clientX : e.clientX;
+            var val = x-cont.offset().left;
+            if (val >= min && val <= max) {
+                el.css({left: val + "px"});
+                if (callback) callback(round(val/max));
+            }
+            e.preventDefault();
+            return false;
+        };
+        cont.click(function (e) {
+            var x = (e.touches && e.touches.length) ? e.touches[0].clientX : e.clientX;
+            var val = x-cont.offset().left;
+            if (val >= min && val <= max) {
+                el.css({left : val + "px"});
+                if (callback) callback(round(val/max));
+            }
+        });
+        el.get(0).onmousedown = el.get(0).ontouchstart = startDrag;
+    };
+    
+    $.fn.updateColor = function (color, callback) {
+        var update = false;
+        var el = this.get(0);
+        
+        this.click(function () {
+            colorCallback(color.toString().toUpperCase());
+        });
+        
+        el.onmousedown = el.ontouchstart = function () { update = true; };    
+        el.onmouseup = el.ontouchend = function () { update = false; };    
+        el.onmousemove = el.ontouchmove = function () {
+            colorCallback(color.toString().toUpperCase());
+        };
+    };
+    
+    function panCallback(value) {
+        $("#pan-value").html(value);
+    }
+
+    function tiltCallback(value) {
+        $("#tilt-value").html(value);        
+    }
+    
+    function colorCallback(value) {
+        var c = "#" + value;
+        $("#color-value").html(c).css({color : c});        
+    }
+    
+    $(window).load(function () {
+        var el = $("#color-picker").get(0);
+        var picker = new jscolor.color(el);
+        el.color.showPicker();
+        
+        $("body>div:last").updateColor(el.color);
+        
+        jscolor.picker.boxB.style.background = "#333";
+        jscolor.picker.boxB.style.borderColor = "#333";
+        jscolor.picker.boxB.style.width = "260px";
+        
+        $("#pan-slider").slider(panCallback);
+        $("#tilt-slider").slider(tiltCallback);
+    });
+    window.top.scrollTo(0, 1);
+</script>
+</body>
+</html>

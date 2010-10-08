@@ -154,3 +154,29 @@ div.buttons button, div.buttons a.btn {
   width: 300px;
   text-align: center;
 }
+
+.list {
+    margin: 0 -1em;
+}
+
+.list p {
+    margin: 0;
+}
+
+.list li {
+    padding: 1em;
+    text-shadow: 1px 1px 1px #000;
+    border-bottom: solid 1px #171717;
+    border-top: solid 1px #1c1c1c;
+    position: relative;
+}
+
+.list a.delete{
+    position: absolute;
+    background: #171717;
+    padding: 0.3em 0.5em;
+    display: block;
+    color: #fff;
+    right: 0.5em;
+    top: 0.5em;
+}
