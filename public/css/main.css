@@ -144,6 +144,10 @@ div.buttons button, div.buttons a.btn {
     top: -7px;
 }
 
+.slider.vertical .ui-slider-handle {
+    margin-left: -8px;
+}
+
 .slider .ui-slider-handle.active {
     border-color: #588abc;
 }
