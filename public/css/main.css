@@ -125,6 +125,11 @@ div.buttons button, div.buttons a.btn {
     width: 255px;
 }
 
+.slider.vertical {
+    width: 9px;
+    height: 225px;    
+}
+
 .slider .ui-slider-handle {
     border: solid 1px #123960;
     -moz-border-radius: 3px;
