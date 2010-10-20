@@ -69,7 +69,7 @@
             el = $("#loader").get(0);
             run();
         }
-    }
+    };
     
     $.fn.slider = function (callback, vertical) {
         var cont = this;
@@ -173,7 +173,7 @@
 
         var out = $("#header").get(0);
         var reg = /^#(.)\1(.)\2(.)\3$/;
-        var cp = Raphael.colorwheel(20, 75, 240, "#eee");
+        var cp = Raphael.colorwheel(15, 75, 240, "#eee");
         cp.onchange = function (clr) {
             //out.value = clr.replace(reg, "#$1$2$3");
             //cp.color(clr);
@@ -183,8 +183,10 @@
 
         $("#pan-slider").slider(panCallback);
         $("#tilt-slider").slider(tiltCallback, true);
+        $("#content").bind("touchmove", function (e) {
+            e.preventDefault();
+        });
     });
-    document.addEventListener("touchmove", function (e) { e.prevendDefault(); }, false);
     window.top.scrollTo(0, 1);
 </script>
 </body>
